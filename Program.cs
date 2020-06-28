@@ -529,12 +529,7 @@ namespace TwitterBotDotNet
             else if (userInput == "5")
             {
 
-                //create a list to hold each of the scraped elements
-                //join each of the items with a ","
-                //post new string to twitter
-
-
-                Console.WriteLine("This is under construction, but has limited functionallity right now.");
+                Console.WriteLine("This is under construction, limited functionallity only.");
                 Console.WriteLine("Displays hunting season of all animals in kentucky right now.");
                 //grab html from website
 
@@ -546,22 +541,28 @@ namespace TwitterBotDotNet
 
                 //loop through animals
                 int index = 1;
+                List<string> animals = new List<string>();
                 foreach (var gameAnimals in InSeason)
                 {
-                    Console.WriteLine($"{index}). {gameAnimals.InnerText}");
+                    //add each animal to a list
+                    string gameWithSpace = gameAnimals.InnerText;
+                    animals.Add(gameWithSpace);
+                    Console.WriteLine($"{index}). {gameWithSpace}");
                     index++;
                 }
 
+                //join the list of animals into a string 
+                string stringOfAnimals = String.Join(", ", animals);
+                Console.WriteLine(stringOfAnimals);
 
+                //post
                 Console.WriteLine("These are the animals in season right now. Post to twitter?");
                 string userResponse = Console.ReadLine().ToLower();
                 if(userResponse == "yes" || userResponse == "y")
                 {
                     //post a tweet
-
-                    string textToTweet = Console.ReadLine(); //the text to be tweeted
-                    Tweet.PublishTweet(textToTweet);
-                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Tweet.PublishTweet("Kentucky hunting season is open for: " + stringOfAnimals);
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("scraped element/s posted");
                     Console.ResetColor();
                 }
