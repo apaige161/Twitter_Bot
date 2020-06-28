@@ -552,6 +552,7 @@ namespace TwitterBotDotNet
                     index++;
                 }
 
+
                 Console.WriteLine("These are the animals in season right now. Post to twitter?");
                 string userResponse = Console.ReadLine().ToLower();
                 if(userResponse == "yes" || userResponse == "y")
