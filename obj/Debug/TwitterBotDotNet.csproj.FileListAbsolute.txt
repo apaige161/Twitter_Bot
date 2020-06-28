@@ -40,7 +40,6 @@ C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\obj\Debug\TwitterBotDotNet.cspr
 C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\obj\Debug\TwitterBotDotNet.csproj.CopyComplete
 C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\obj\Debug\TwitterBotDotNet.exe
 C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\obj\Debug\TwitterBotDotNet.pdb
-C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\TwitterBotDotNetHelper.exe
 C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\TwitterImg\babyLamb.jpg
 C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\TwitterImg\bannana.jpg
 C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\TwitterImg\barn.jpg
@@ -85,3 +84,7 @@ C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\TwitterImg\treeTruck.
 C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\TwitterImg\tropicalLandscape.jpg
 C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\TwitterImg\woodBarn.jpg
 C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\TwitterImg\zebra.jpg
+C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\TwitterBotDotNetHelper.exe
+C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\HtmlAgilityPack.dll
+C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\HtmlAgilityPack.xml

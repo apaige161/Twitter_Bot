@@ -72,7 +72,9 @@ namespace TwitterBotDotNet
             string[] UserOptions = { "Text Only Tweet",
                                     "Picture and Text Tweet",
                                     "Schedule Tweet for later",
-                                    "Schedule Media Tweet for later" };
+                                    "Schedule Media Tweet for later",
+                                    "scrape and tweet"
+            };
 
             Console.WriteLine("Choose an option by typing the number");
             for (int i = 0; i < UserOptions.Length; i++)
@@ -521,6 +523,77 @@ namespace TwitterBotDotNet
                 Console.WriteLine("Your file path is " + filePath);
 
             }   //tweet media later
+
+
+            //scrape data from a website and tweet that text
+            else if (userInput == "5")
+            {
+
+                //create a list to hold each of the scraped elements
+                //join each of the items with a ","
+                //post new string to twitter
+
+
+                Console.WriteLine("This is under construction, but has limited functionallity right now.");
+                Console.WriteLine("Displays hunting season of all animals in kentucky right now.");
+                //grab html from website
+
+                //fire html loader
+                HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb();
+                HtmlAgilityPack.HtmlDocument doc = web.Load("https://app.fw.ky.gov/SeasonDates/Default.aspx");
+                //grab html from home page
+                var InSeason = doc.DocumentNode.SelectNodes("//div[@class='accordion-heading']").ToList();
+
+                //loop through animals
+                int index = 1;
+                foreach (var gameAnimals in InSeason)
+                {
+                    Console.WriteLine($"{index}). {gameAnimals.InnerText}");
+                    index++;
+                }
+
+                Console.WriteLine("These are the animals in season right now. Post to twitter?");
+                string userResponse = Console.ReadLine().ToLower();
+                if(userResponse == "yes" || userResponse == "y")
+                {
+                    //post a tweet
+
+                    string textToTweet = Console.ReadLine(); //the text to be tweeted
+                    Tweet.PublishTweet(textToTweet);
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("scraped element/s posted");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("scraped element/s could not be posted");
+                    Console.ResetColor();
+                }
+
+                
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             else
             {
