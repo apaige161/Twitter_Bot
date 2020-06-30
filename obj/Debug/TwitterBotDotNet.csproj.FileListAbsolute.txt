@@ -88,3 +88,4 @@ C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\TwitterBotDotNetHelpe
 C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\HtmlAgilityPack.dll
 C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\HtmlAgilityPack.pdb
 C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\HtmlAgilityPack.xml
+C:\Users\apaig\Documents\VSRepo\TwitterBotDotNet\bin\Debug\TwitterBotDotNetScraperHelper.exe

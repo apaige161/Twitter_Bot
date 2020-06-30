@@ -617,7 +617,7 @@ namespace TwitterBotDotNet
                 {
                     Console.WriteLine($"{ newsList[0] }");
                     //post a tweet
-                    Tweet.PublishTweet($"TOP STORY: { newsList[0] } #Engadget");
+                    Tweet.PublishTweet($"TOP STORY: { newsList[0] } #Engadget and some words");
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("scraped element/s posted");
                     Console.ResetColor();
@@ -631,11 +631,15 @@ namespace TwitterBotDotNet
 
             else if (userInput == "7")
             {
+
+                
+
+
                 Console.WriteLine("You have initialized the daily news scraper");
                 /**********start helper program************/
 
                 //pass in the path of the helper program
-                string pathOfHelperProgram = @".\TwitterBotDotNetHelper.exe";
+                string pathOfHelperProgram = @".\TwitterBotDotNetScraperHelper.exe";
 
                 ProcessStartInfo startInfo = new ProcessStartInfo(pathOfHelperProgram);
 
@@ -643,7 +647,6 @@ namespace TwitterBotDotNet
 
                 //print time of scheduled post
                 Console.WriteLine("Your tweet will be published every 24 hours as long as the program is running");
-
             }
 
             else
