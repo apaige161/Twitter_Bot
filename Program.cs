@@ -73,7 +73,9 @@ namespace TwitterBotDotNet
                                     "Picture and Text Tweet",
                                     "Schedule Tweet for later",
                                     "Schedule Media Tweet for later",
-                                    "scrape and tweet"
+                                    "Scrape for what is in season and tweet",
+                                    "Scrape for news headlines on engadget.com and tweet",
+                                    "Initialize Scrape for news headlines on engadget.com and tweet results every day"
             };
 
             Console.WriteLine("Choose an option by typing the number");
@@ -326,7 +328,7 @@ namespace TwitterBotDotNet
                 //print time of scheduled post
                 Console.WriteLine("Your tweet will be published at " + newTime);
 
-            }   //tweet later
+            }   //tweet text later
 
             else if (userInput == "4")
             {
@@ -523,13 +525,10 @@ namespace TwitterBotDotNet
                 Console.WriteLine("Your file path is " + filePath);
 
             }   //tweet media later
-
-
-            //scrape data from a website and tweet that text
+            
             else if (userInput == "5")
+            //scrape data from a website and tweet that text
             {
-
-                Console.WriteLine("This is under construction, limited functionallity only.");
                 Console.WriteLine("Displays hunting season of all animals in kentucky right now.");
                 //grab html from website
 
@@ -573,29 +572,79 @@ namespace TwitterBotDotNet
                     Console.ResetColor();
                 }
 
+
+            }   //scrape data from a website and tweet that text
+
+            if(userInput == "6")
+            {
+
+                /***issue**/
+                //when the articles are being scraped they have "\n" attached so the formatting is weird
+
+
+                //post news headline now from scrapped website
+                HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb();
+                HtmlAgilityPack.HtmlDocument doc = web.Load("https://www.engadget.com/");
+                //grab html from home page
+                var NewsArticles = doc.DocumentNode.SelectNodes("//span[@class='th-underline']");
+
+                //loop through headlines
+                int index = 1;
+                List<string> newsList = new List<string>();
+                foreach (var NewsArticle in NewsArticles)
+                {
+                    //add each article to a list
+                    string atricleText = NewsArticle.InnerText.ToString();
+                    newsList.Add(atricleText);
+
+                    if (index == 1)
+                    {
+                        Console.WriteLine($"HEADLINE: {atricleText}");
+                    }
+                    if (index > 1 && index <= 3)
+                    {
+                        Console.WriteLine($"{index}).{atricleText}");
+                    }
+                    index++;
+                }
+
+                //post articles
+                Console.WriteLine("Would you like to post the top news story?");
                 
+                string postArticle = Console.ReadLine().ToLower();
+
+                if(postArticle == "yes" || postArticle == "y")
+                {
+                    Console.WriteLine($"{ newsList[0] }");
+                    //post a tweet
+                    Tweet.PublishTweet($"TOP STORY: { newsList[0] } #Engadget");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("scraped element/s posted");
+                    Console.ResetColor();
+                }
+
+                //schedule this to run daily
+
+
+
             }
 
+            else if (userInput == "7")
+            {
+                Console.WriteLine("You have initialized the daily news scraper");
+                /**********start helper program************/
 
+                //pass in the path of the helper program
+                string pathOfHelperProgram = @".\TwitterBotDotNetHelper.exe";
 
+                ProcessStartInfo startInfo = new ProcessStartInfo(pathOfHelperProgram);
 
+                Process.Start(startInfo);
 
+                //print time of scheduled post
+                Console.WriteLine("Your tweet will be published every 24 hours as long as the program is running");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            }
 
             else
             {
