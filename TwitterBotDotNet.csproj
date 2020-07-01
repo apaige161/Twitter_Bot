@@ -144,7 +144,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TwitterBotDotNetScraperHelper.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TwitterImg\babyLamb.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
