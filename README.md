@@ -4,7 +4,7 @@ This console app will tweet to the twitter account above
 
 The program gives the user some options: tweet, tweet media with a caption or tweet later, and some web scraping options
 
-Reach out to me through slack or email (apaige161@gmail.com) to get the api_keys.txt file.  
+Reach out to me through slack or email to get the api_keys.txt file.  
 -You will have to add the api_keys.txt file for the program to run properly 
 -The program will run but you will see red text to 'check credentials or internet connection' via the console
 -Without the api_keys.txt file the app will not post to twitter
