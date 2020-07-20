@@ -688,6 +688,7 @@ namespace TwitterBotDotNet
             Console.ResetColor();
         }
 
+        //opens chrome and goes directly to twitter
         public static void CheckTwitter()
         {
             //check twitter
