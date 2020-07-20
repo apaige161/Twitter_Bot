@@ -633,7 +633,7 @@ namespace TwitterBotDotNet
             //TODO: - Done in scraper helper -  Post a random article out of the top few articles
 
             //Print hashtags to be posted
-            string input = newsList[9];
+            string input = newsList[0];
             string firstWordOfArticle = input.Substring(0, input.IndexOf(" ")); // Result is "first word of article"
             Console.Write($"The Hashtags being sent with the tweet: ");
             Console.ForegroundColor = ConsoleColor.Blue;
