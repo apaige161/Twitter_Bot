@@ -589,7 +589,7 @@ namespace TwitterBotDotNet
             if (userResponse == "yes" || userResponse == "y")
             {
                 //post a tweet
-                Tweet.PublishTweet("Kentucky hunting season is open for: " + stringOfAnimals);
+                Tweet.PublishTweet("Kentucky hunting season is open for:  " + stringOfAnimals);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("scraped element/s posted");
                 Console.ResetColor();
@@ -672,7 +672,7 @@ namespace TwitterBotDotNet
             Process.Start(startInfo);
 
             //print time of scheduled post
-            Console.WriteLine("Your tweet will be published every 4 hours as long as the program is running");
+            Console.WriteLine("Your tweet will be published every 4 minutes as long as the program is running");
         }
 
         public static void ReturnError()
