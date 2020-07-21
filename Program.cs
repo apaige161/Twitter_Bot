@@ -144,7 +144,7 @@ namespace TwitterBotDotNet
 
         public static void PrintInstructionsForPictures()
         {
-            /******promt user to pick a picture******/
+            //promt user to pick a picture
             Console.Write("INSTRUCTIONS: ");
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("Select the picture you want to post");
@@ -164,7 +164,7 @@ namespace TwitterBotDotNet
         //publish media with a caption now
         public static void Option2()
         {
-            /******promt user to pick a picture******/
+            //promt user to pick a picture
             PrintInstructionsForPictures();
 
             /******working with the picture files******/
@@ -334,7 +334,7 @@ namespace TwitterBotDotNet
             PrintInstructions();
             string textToTweet = Console.ReadLine();
 
-            /***********************add time to the current time************************/
+            //add time to the current time
 
             //get current time
             DateTime currentTime = DateTime.Now;
@@ -589,7 +589,7 @@ namespace TwitterBotDotNet
             if (userResponse == "yes" || userResponse == "y")
             {
                 //post a tweet
-                Tweet.PublishTweet("Kentucky hunting season is open for: " + stringOfAnimals);
+                Tweet.PublishTweet("Kentucky hunting season is open for:  " + stringOfAnimals);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("scraped element/s posted");
                 Console.ResetColor();
@@ -633,7 +633,7 @@ namespace TwitterBotDotNet
             //TODO: - Done in scraper helper -  Post a random article out of the top few articles
 
             //Print hashtags to be posted
-            string input = newsList[9];
+            string input = newsList[0];
             string firstWordOfArticle = input.Substring(0, input.IndexOf(" ")); // Result is "first word of article"
             Console.Write($"The Hashtags being sent with the tweet: ");
             Console.ForegroundColor = ConsoleColor.Blue;
@@ -672,7 +672,7 @@ namespace TwitterBotDotNet
             Process.Start(startInfo);
 
             //print time of scheduled post
-            Console.WriteLine("Your tweet will be published every 4 hours as long as the program is running");
+            Console.WriteLine("Your tweet will be published every 4 minutes as long as the program is running");
         }
 
         public static void ReturnError()
