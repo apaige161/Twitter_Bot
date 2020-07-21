@@ -144,7 +144,7 @@ namespace TwitterBotDotNet
 
         public static void PrintInstructionsForPictures()
         {
-            /******promt user to pick a picture******/
+            //promt user to pick a picture
             Console.Write("INSTRUCTIONS: ");
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("Select the picture you want to post");
@@ -164,7 +164,7 @@ namespace TwitterBotDotNet
         //publish media with a caption now
         public static void Option2()
         {
-            /******promt user to pick a picture******/
+            //promt user to pick a picture
             PrintInstructionsForPictures();
 
             /******working with the picture files******/
@@ -334,7 +334,7 @@ namespace TwitterBotDotNet
             PrintInstructions();
             string textToTweet = Console.ReadLine();
 
-            /***********************add time to the current time************************/
+            //add time to the current time
 
             //get current time
             DateTime currentTime = DateTime.Now;
