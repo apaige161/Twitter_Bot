@@ -85,7 +85,7 @@ namespace TwitterBotDotNet
 
             //read passwords from file here using your own file path
 
-            string pathOfApiKeys = @".\api_keys.txt";
+            string pathOfApiKeys = $@".{Path.DirectorySeparatorChar}api_keys.txt";
             //read file and put contents into array
             string[] allKeys = File.ReadAllLines(pathOfApiKeys);
 
@@ -170,7 +170,7 @@ namespace TwitterBotDotNet
             /******working with the picture files******/
             //must be in .jpg
             /******file name of all pictures******/
-            string pathOfPics = @".\twitterImg";
+            string pathOfPics = $@".{Path.DirectorySeparatorChar}twitterImg";
             //gets each file in directory
             string[] files = Directory.GetFiles(pathOfPics);
 
@@ -292,7 +292,7 @@ namespace TwitterBotDotNet
             int realUserChoice = Convert.ToInt32(userChoicePicture) - 1;
 
             //full path of a file selected
-            string filePath = pathOfPics + @"\" + fileNames[realUserChoice].ToString();
+            string filePath = pathOfPics + $@"{Path.DirectorySeparatorChar}" + fileNames[realUserChoice].ToString();
 
             //user input : picture caption
             Console.WriteLine("\n");
@@ -349,7 +349,7 @@ namespace TwitterBotDotNet
 
             /**********start helper program************/
             //pass in the path of the helper program
-            string pathOfHelperProgram = @".\TwitterBotDotNetHelper.exe";
+            string pathOfHelperProgram = $@".{Path.DirectorySeparatorChar}TwitterBotDotNetHelper.exe";
 
             ProcessStartInfo startInfo = new ProcessStartInfo(pathOfHelperProgram);
 
@@ -391,7 +391,7 @@ namespace TwitterBotDotNet
             /******working with the picture files (must be in .jpg)******/
 
             /**file name of all pictures**/
-            string pathOfPics = @".\twitterImg";
+            string pathOfPics = $@".{Path.DirectorySeparatorChar}twitterImg";
             //gets each file in directory
             string[] files = Directory.GetFiles(pathOfPics);
 
@@ -517,7 +517,7 @@ namespace TwitterBotDotNet
             int realUserChoice = Convert.ToInt32(userChoicePicture) - 1;
 
             //full path of a file selected
-            string filePath = pathOfPics + @"\" + fileNames[realUserChoice].ToString();
+            string filePath = pathOfPics + $@"{Path.DirectorySeparatorChar}" + fileNames[realUserChoice].ToString();
 
             //user input : picture caption
             Console.WriteLine("\n");
@@ -541,7 +541,7 @@ namespace TwitterBotDotNet
 
             /**********start helper program************/
             //pass in the path of the helper program
-            string pathOfHelperProgram = @".\TwitterBotDotNetHelper.exe";
+            string pathOfHelperProgram = $@".{Path.DirectorySeparatorChar}TwitterBotDotNetHelper.exe";
             ProcessStartInfo startInfo = new ProcessStartInfo(pathOfHelperProgram);
             int userInput = 4;
 
@@ -666,7 +666,7 @@ namespace TwitterBotDotNet
             //start helper program
 
             //pass in the path of the helper program
-            string pathOfHelperProgram = @".\TwitterBotDotNetScraperHelper.exe";
+            string pathOfHelperProgram = $@".{Path.DirectorySeparatorChar}TwitterBotDotNetScraperHelper.exe";
 
             ProcessStartInfo startInfo = new ProcessStartInfo(pathOfHelperProgram);
 
@@ -694,6 +694,7 @@ namespace TwitterBotDotNet
         {
             //check twitter
             Console.WriteLine("Would you like to check twitter to make sure? Select: Yes or No");
+            Console.WriteLine("Only works for windows, sorry Apple people :(");
             string checkTwitter = Console.ReadLine();
             if (checkTwitter.ToLower() == "yes" || checkTwitter.ToLower() == "y")
             {
