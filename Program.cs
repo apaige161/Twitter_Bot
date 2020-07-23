@@ -18,6 +18,8 @@ namespace TwitterBotDotNet
     {
         //TODO: convert to a razor pages front end
 
+        //TODO: check twitter through safari
+
         static void Main(string[] args)
         {
             Login();
@@ -587,7 +589,7 @@ namespace TwitterBotDotNet
             //post
             Console.WriteLine("These are the animals in season right now. Post to twitter?");
             string userResponse = Console.ReadLine().ToLower();
-            if (userResponse == "yes" || userResponse == "y")
+            if (userResponse.ToLower() == "yes" || userResponse.ToLower() == "y")
             {
                 //post a tweet
                 Tweet.PublishTweet("Kentucky hunting season is open for:  " + stringOfAnimals);
