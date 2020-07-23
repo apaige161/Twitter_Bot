@@ -192,7 +192,7 @@ namespace TwitterBotDotNet
             string showAllPictureNames = Console.ReadLine();
             Console.WriteLine("\n");
 
-            if (showAllPictureNames == "yes" || showAllPictureNames == "" || showAllPictureNames == "y")
+            if (showAllPictureNames.ToLower() == "yes" || showAllPictureNames.ToLower() == "" || showAllPictureNames.ToLower() == "y")
             {
                 //set color of files
                 Console.BackgroundColor = ConsoleColor.White;
@@ -224,7 +224,7 @@ namespace TwitterBotDotNet
             Console.WriteLine("\n");
 
             //user input : search YES or NO
-            if (userSearch == "yes" || userSearch == "" || userSearch == "y")
+            if (userSearch.ToLower() == "yes" || userSearch.ToLower() == "" || userSearch.ToLower() == "y")
             {
                 //added user input into for loop to write all file containing search word
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -269,7 +269,7 @@ namespace TwitterBotDotNet
                     Console.WriteLine("\n");
                 }
             }
-            else if (userSearch == "no" || userSearch == "n")
+            else if (userSearch.ToLower() == "no" || userSearch.ToLower() == "n")
             {
                 //in case I want a message for no search
             }
@@ -300,7 +300,8 @@ namespace TwitterBotDotNet
             Console.WriteLine("What would you like to say with your picture on twitter?");
             Console.ResetColor();
             //capture input
-            string textToTweet = Console.ReadLine();
+            string textToTweet = "Generic words, no user input";
+            textToTweet = Console.ReadLine();
             Console.WriteLine("\n");
 
 
@@ -414,7 +415,7 @@ namespace TwitterBotDotNet
             Console.WriteLine("\n");
 
             //list of all pictures
-            if (showAllPictureNames == "yes" || showAllPictureNames == "" || showAllPictureNames == "y")
+            if (showAllPictureNames.ToLower() == "yes" || showAllPictureNames.ToLower() == "" || showAllPictureNames.ToLower() == "y")
             {
                 //set color of files
                 Console.BackgroundColor = ConsoleColor.White;
@@ -446,7 +447,7 @@ namespace TwitterBotDotNet
             Console.WriteLine("\n");
 
             //user input : search YES or NO
-            if (userSearch == "yes" || userSearch == "" || userSearch == "y")
+            if (userSearch.ToLower() == "yes" || userSearch.ToLower() == "" || userSearch.ToLower() == "y")
             {
                 //added user input into for loop to write all file containing search word
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -496,7 +497,7 @@ namespace TwitterBotDotNet
                     Console.WriteLine("\n");
                 }
             }
-            else if (userSearch == "no" || userSearch == "n")
+            else if (userSearch.ToLower() == "no" || userSearch.ToLower() == "n")
             {
                 //blank on purpose
             }
