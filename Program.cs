@@ -16,6 +16,11 @@ namespace TwitterBotDotNet
 {
     class Program
     {
+        //NOTE: for mac select Run from the top menu bar
+        //      Run with > custom configuration
+        //      make sure 'run in terminal' is checked
+        //      Run
+
         //TODO: convert to a razor pages front end
 
         //TODO: check twitter through safari
@@ -701,14 +706,47 @@ namespace TwitterBotDotNet
         {
             //check twitter
             Console.WriteLine("Would you like to check twitter to make sure? Select: Yes or No");
-            Console.WriteLine("Only works for windows, sorry Apple people :(");
             string checkTwitter = Console.ReadLine();
             if (checkTwitter.ToLower() == "yes" || checkTwitter.ToLower() == "y")
             {
-                //opens chrome to twitter page
+                //check for windows or mac
+
+                Console.WriteLine("Are you using windows? Yes or No");
+                string onWindows;
+                onWindows = Console.ReadLine();
+                if(onWindows.ToLower() == "yes" || onWindows.ToLower() == "y" || onWindows == "")
+                {
+                    Process.Start("Chrome.exe", "http://www.twitter.com/@autoBot04768645");
+                }
+                else if(onWindows.ToLower() == "no" || onWindows.ToLower() == "n")
+                {
+                    Process.Start("http://www.twitter.com/@autoBot04768645");
+                }
+                else
+                {
+                    Console.WriteLine("Not a valid input");
+                }
+                
+            }
+        }
+
+        public static void CheckTwitterSafari()
+        {
+            //for Apple compatibility
+            //find the safari/exe file
+
+            //check twitter
+            Console.WriteLine("Would you like to check twitter to make sure? Select: Yes or No");
+            Console.WriteLine("Only works for OSX, sorry Windows people :(");
+            string checkTwitter = Console.ReadLine();
+            if (checkTwitter.ToLower() == "yes" || checkTwitter.ToLower() == "y")
+            {
+                //opens safari to twitter page
                 // url's are not considered documents. They can only be opened
                 // by passing them as arguments.
-                Process.Start("Chrome.exe", "http://www.twitter.com/@autoBot04768645");
+                
+                //"http://www.twitter.com/@autoBot04768645"
+                //"/Applications/Safari.app/Contents/MacOS/Safari", 
             }
         }
     }
