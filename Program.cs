@@ -594,10 +594,14 @@ namespace TwitterBotDotNet
                 Console.WriteLine("scraped element/s posted");
                 Console.ResetColor();
             }
+            else if (userResponse.ToLower() == "no" || userResponse.ToLower() == "n")
+            {
+                Console.WriteLine("Elements were not posted");
+            }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("scraped element/s could not be posted");
+                Console.WriteLine("scraped element/s could not be posted, please provide a proper response");
                 Console.ResetColor();
             }
         }
