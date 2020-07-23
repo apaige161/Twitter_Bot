@@ -194,7 +194,7 @@ namespace TwitterBotDotNet
 
             //ask user if they want to see the list of available pictures
             Console.Write("Would you like to see the available picture files to choose from?");
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine(" Select: YES or NO");
             string showAllPictureNames = Console.ReadLine();
             Console.WriteLine("\n");
@@ -225,7 +225,7 @@ namespace TwitterBotDotNet
             /******search picture files******/
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write("Would you like to search for a file by name?");
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.DarkGray; ;
             Console.WriteLine(" Select: YES or NO");
             string userSearch = Console.ReadLine().ToLower();
             Console.WriteLine("\n");
@@ -416,7 +416,7 @@ namespace TwitterBotDotNet
 
             //ask user if they want to see the list of available pictures
             Console.Write("Would you like to see the available picture files to choose from?");
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.DarkGray; ;
             Console.WriteLine(" Select: YES or NO");
             string showAllPictureNames = Console.ReadLine().ToLower();
             Console.WriteLine("\n");
@@ -448,7 +448,7 @@ namespace TwitterBotDotNet
             /******search picture files******/
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write("Would you like to search for a file by name?");
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.DarkGray; ;
             Console.WriteLine(" Select: YES or NO");
             string userSearch = Console.ReadLine().ToLower();
             Console.WriteLine("\n");
