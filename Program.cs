@@ -704,52 +704,15 @@ namespace TwitterBotDotNet
         //opens chrome and goes directly to twitter
         public static void CheckTwitter()
         {
-            //check twitter
             Console.WriteLine("Would you like to check twitter to make sure? Select: Yes or No");
             string checkTwitter = Console.ReadLine();
             if (checkTwitter.ToLower() == "yes" || checkTwitter.ToLower() == "y")
             {
-                //check for windows or mac
-
-                Console.WriteLine("Are you using windows? Yes or No");
-                string onWindows;
-                onWindows = Console.ReadLine();
-                if(onWindows.ToLower() == "yes" || onWindows.ToLower() == "y" || onWindows == "")
-                {
-                    Process.Start("Chrome.exe", "http://www.twitter.com/@autoBot04768645");
-                }
-                else if(onWindows.ToLower() == "no" || onWindows.ToLower() == "n")
-                {
-                    Process.Start("http://www.twitter.com/@autoBot04768645");
-                }
-                else
-                {
-                    Console.WriteLine("Not a valid input");
-                }
-                
+                Process.Start("http://www.twitter.com/@autoBot04768645");
             }
         }
 
-        public static void CheckTwitterSafari()
-        {
-            //for Apple compatibility
-            //find the safari/exe file
-
-            //check twitter
-            Console.WriteLine("Would you like to check twitter to make sure? Select: Yes or No");
-            Console.WriteLine("Only works for OSX, sorry Windows people :(");
-            string checkTwitter = Console.ReadLine();
-            if (checkTwitter.ToLower() == "yes" || checkTwitter.ToLower() == "y")
-            {
-                //opens safari to twitter page
-                // url's are not considered documents. They can only be opened
-                // by passing them as arguments.
-                
-                //"http://www.twitter.com/@autoBot04768645"
-                //"/Applications/Safari.app/Contents/MacOS/Safari", 
-            }
-        }
-    }
+    }//end of program class
 
 
-}
+}//end
