@@ -2,7 +2,12 @@
 
 This console app will tweet to the twitter account above 
 
-The program gives the user some options: tweet, tweet media with a caption or tweet later, and some web scraping options
+NOTE: for mac select Run from the top menu bar
+Run with > custom configuration
+make sure 'run in terminal' is checked
+Run
+
+The program gives the user some options: tweet, tweet media with a caption, or tweet later(text or media), and some web scraping options
 
 Reach out to me through slack or email to get the api_keys.txt file.  
 -You will have to add the api_keys.txt file for the program to run properly 
