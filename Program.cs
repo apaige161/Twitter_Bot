@@ -11,6 +11,7 @@ using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
 using System.Diagnostics;
+using HtmlAgilityPack;
 
 namespace TwitterBotDotNet
 {
@@ -40,37 +41,41 @@ namespace TwitterBotDotNet
                 {
                     case "1":
                         //publish tweet text on your timeline now
-                        Option1();
+                        TweetText();
                         break;
 
                     case "2":
                         //publish media with a caption now
-                        Option2();
+                        TweetMedia();
                         break;
 
                     case "3":
                         //tweet text later
-                        Option3();
+                        ScheduleTweetText();
                         break;
 
                     case "4":
                         //tweet media later
-                        Option4();
+                        ScheduleTweetMedia();
                         break;
-
                     case "5":
-                        //scrape data from a website and tweet that text now
-                        Option5();
+                        //scrape deal of the day at bestbuy
+                        TweetDealOfTheDay();
                         break;
 
                     case "6":
-                        //post news headline from a website(engadget.com) (popular) now from scrapped website now
-                        Option6();
+                        //scrape data from a website and tweet that text now
+                        TweetHuntingSeaon();
                         break;
 
                     case "7":
+                        //post news headline from a website(engadget.com) (popular) now from scrapped website now
+                        TweetNews();
+                        break;
+
+                    case "8":
                         //initialize scraper now and to run every (4 minutes)
-                        Option7();
+                        IntervalTweetNews();
                         break;
 
                     default:
@@ -128,9 +133,10 @@ namespace TwitterBotDotNet
                                     "Picture and Text Tweet",
                                     "Schedule Tweet for later",
                                     "Schedule Media Tweet for later",
-                                    "Scrape for what is in season and tweet",
-                                    "Scrape for news headlines on engadget.com and tweet",
-                                    "Initialize Scrape for news headlines on engadget.com and tweet results every day"
+                                    "(Scrape) Best Buy deal of the day and tweet --under construction",
+                                    "(Scrape) hunting season and tweet",
+                                    "(Scrape) news headlines on engadget.com and tweet",
+                                    "(interval) Initialize Scrape for news headlines on engadget.com and tweet results every 4 minutes"
             };
 
             Console.WriteLine("Choose an option by typing the number");
@@ -160,7 +166,7 @@ namespace TwitterBotDotNet
 
 
         //publish tweet text on your timeline now
-        public static void Option1()
+        public static void TweetText()
         {
             PrintInstructions();
             string textToTweet = Console.ReadLine();
@@ -169,14 +175,15 @@ namespace TwitterBotDotNet
         }
 
         //publish media with a caption now
-        public static void Option2()
+        public static void TweetMedia()
         {
             //promt user to pick a picture
             PrintInstructionsForPictures();
 
-            /******working with the picture files******/
+            //working with the picture files
             //must be in .jpg
-            /******file name of all pictures******/
+
+            //file name of all pictures
             string pathOfPics = $@".{Path.DirectorySeparatorChar}twitterImg";
             //gets each file in directory
             string[] files = Directory.GetFiles(pathOfPics);
@@ -326,7 +333,7 @@ namespace TwitterBotDotNet
         }
 
         //schedule tweet text
-        public static void Option3()
+        public static void ScheduleTweetText()
         {
             Console.WriteLine("You will post a tweet at a later date");
             Console.WriteLine("How many days do you want to wait?");
@@ -374,7 +381,7 @@ namespace TwitterBotDotNet
         }
 
         //schedule media with caption to tweet
-        public static void Option4()
+        public static void ScheduleTweetMedia()
         {
             DateTime currentTime = DateTime.Now;
             Console.WriteLine("You will post a media tweet at a later date");
@@ -564,7 +571,7 @@ namespace TwitterBotDotNet
         }
 
         //scrape ky.gov for animals in season once, now
-        public static void Option5()
+        public static void TweetHuntingSeaon()
         {
             Console.WriteLine("Displays hunting season of all animals in kentucky right now.");
             //grab html from website
@@ -614,8 +621,65 @@ namespace TwitterBotDotNet
             }
         }
 
+        //scrape bestbuy.com for deal of the day
+        public static void TweetDealOfTheDay()
+        {
+
+            Console.WriteLine("Displays Bestbuy's Deal of the day!.");
+            //grab html from website
+
+            //fire html loader
+            HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb();
+            HtmlAgilityPack.HtmlDocument doc = web.Load("https://www.bestbuy.com/site/misc/deal-of-the-day/pcmcat248000050016.c?id=pcmcat248000050016");
+
+            //grab html from home page
+            var Deals = doc.DocumentNode.SelectSingleNode("//div[@class='info-block']");
+            Console.Write(Deals);
+            /*
+            foreach (var item in Deals)
+            {
+                var links = item.SelectNodes("a");
+            }
+            */
+
+
+            /*
+            //loop through h3
+            int index = 1;
+            List<string> deals = new List<string>();
+            foreach (var text in Deals)
+            {
+                //add each animal to a list
+                string elementOfDeal = text.InnerHtml;
+                deals.Add(elementOfDeal);
+                Console.WriteLine($"{index}). {elementOfDeal}");
+                index++;
+            }
+            */
+
+
+
+            Console.WriteLine("Should be visable");
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
         //run news scrapper once, now
-        public static void Option6()
+        public static void TweetNews()
         {
             //scrape data
             HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb();
@@ -669,7 +733,7 @@ namespace TwitterBotDotNet
 
         //initialize news scrapper, runs now and then every 4 minutes picks a random top article to post
         //automated hashtags by grabbing all capital words
-        public static void Option7()
+        public static void IntervalTweetNews()
         {
             Console.WriteLine("You have initialized the news scraper, it will look for the top story every 4 minutes and post it.");
             Console.WriteLine("The scraper will randomly choose 1 of the top 14 articles scraped.");
