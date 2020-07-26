@@ -33,11 +33,67 @@ namespace TwitterBotDotNet
 
         static void Main(string[] args)
         {
-            Login();
-
             string keepGoing = "yes";
+            Console.WriteLine("would you like to sign in with the default bot or add your own api keys");
+            Console.WriteLine("Enter DEFAULT or ADDKEYS");
+            string loginChoice = Console.ReadLine();
 
-            while(keepGoing.ToLower() == "yes")
+            if(loginChoice == "default")
+            {
+                //login to tester bot "autobot....."
+                DefaultLogin();
+            }
+
+            else if(loginChoice == "addkeys")
+            {
+                Console.WriteLine("You want to sign into your own account with api keys");
+
+                //set api keys
+                Console.WriteLine("ApiKey");
+                string ApiKey = Console.ReadLine();
+                Console.WriteLine("ApiKeySecret");
+                string ApiKeySecret = Console.ReadLine();
+                Console.WriteLine("AccessToken");
+                string AccessToken = Console.ReadLine();
+                Console.WriteLine("AccessTokenSecret");
+                string AccessTokenSecret = Console.ReadLine();
+
+
+                // Set up your credentials (https://apps.twitter.com)
+                Auth.SetUserCredentials(ApiKey, ApiKeySecret, AccessToken, AccessTokenSecret);
+
+                //Login
+                var user = User.GetAuthenticatedUser();
+                if (user != null)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Login Successful");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Could Not Login, Check Credentials or Internet Connection");
+                    Console.ResetColor();
+                    keepGoing = "no";
+                }
+                Console.WriteLine("\n");
+
+
+            }
+
+            else
+            {
+                Console.WriteLine("User must choose an option");
+            }
+
+
+
+            //validate which user is loged in
+
+
+            
+            while(keepGoing == "yes")
             {
                 ProgramOptions();
                 string userInput = Console.ReadLine();
@@ -89,23 +145,22 @@ namespace TwitterBotDotNet
                         break;
                 }
                 CheckForExit();
-                keepGoing = Console.ReadLine(); 
+                keepGoing = Console.ReadLine();
             }
+
+            Console.WriteLine("The program is now closing....");
+            Console.ReadLine();
         }
 
-        public static void Login()
+        public static void DefaultLogin()
         {
-            /***login***/
-
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Bot started");
-
             //read passwords from file here using your own file path
 
             string pathOfApiKeys = $@".{Path.DirectorySeparatorChar}api_keys.txt";
             //read file and put contents into array
             string[] allKeys = File.ReadAllLines(pathOfApiKeys);
 
+            //default keys for test bot
             string ApiKey = allKeys[0];
             string ApiKeySecret = allKeys[1];
             string AccessToken = allKeys[2];
@@ -118,6 +173,7 @@ namespace TwitterBotDotNet
             var user = User.GetAuthenticatedUser();
             if (user != null)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Login Successful");
                 Console.ResetColor();
             }
@@ -791,6 +847,7 @@ namespace TwitterBotDotNet
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Continue? YES or NO");
             Console.ResetColor();
+
         }
 
         //opens chrome and goes directly to twitter
