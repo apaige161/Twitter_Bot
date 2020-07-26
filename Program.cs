@@ -585,18 +585,28 @@ namespace TwitterBotDotNet
             //loop through animals
             int index = 1;
             List<string> animals = new List<string>();
+            List<string> animalHashtag = new List<string>();
+            string genricHashtags = "#Kentucky #HuntingSeason #ProjectWebScrape #CSharp";
+            string animalHash = "";
             foreach (var gameAnimals in InSeason)
             {
-                //add each animal to a list
-                string gameWithSpace = gameAnimals.InnerText;
-                animals.Add(gameWithSpace);
-                Console.WriteLine($"{index}). {gameWithSpace}");
+                //add each animal to a list and add each with a # to another list
+                //get animal hastags
+                animalHash = " #" + gameAnimals.InnerText;
+                animalHashtag.Add(animalHash);
+                //add animals to a list to be displayed
+                animals.Add(gameAnimals.InnerText);
+                Console.WriteLine($"{index}). {gameAnimals.InnerText}");
                 index++;
             }
 
+            //join hashtags
+            string cleanHashtags = String.Join("", animalHashtag);
+            //Console.WriteLine("should have # in front" + cleanHashtags);
+
             //join the list of animals into a string 
             string stringOfAnimals = String.Join(", ", animals);
-            Console.WriteLine(stringOfAnimals);
+            //Console.WriteLine(stringOfAnimals);
 
             //post
             Console.WriteLine("These are the animals in season right now. Post to twitter?");
@@ -604,10 +614,11 @@ namespace TwitterBotDotNet
             if (userResponse.ToLower() == "yes" || userResponse.ToLower() == "y")
             {
                 //post a tweet
-                Tweet.PublishTweet("Kentucky hunting season is open for:  " + stringOfAnimals);
+                Tweet.PublishTweet("Kentucky hunting season is open:  " + stringOfAnimals + "\n" + genricHashtags + cleanHashtags);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("scraped element/s posted");
                 Console.ResetColor();
+                CheckTwitter();
             }
             else if (userResponse.ToLower() == "no" || userResponse.ToLower() == "n")
             {
