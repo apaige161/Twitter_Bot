@@ -22,6 +22,11 @@ namespace TwitterBotDotNet
         //      make sure 'run in terminal' is checked
         //      Run
 
+
+
+        //TODO: refactor TweetNews()
+
+
         //TODO: convert to a razor pages front end
 
         
@@ -596,7 +601,9 @@ namespace TwitterBotDotNet
                 animalHashtag.Add(animalHash);
                 //add animals to a list to be displayed
                 animals.Add(gameAnimals.InnerText);
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine($"{index}). {gameAnimals.InnerText}");
+                Console.ResetColor();
                 index++;
             }
 
@@ -689,8 +696,10 @@ namespace TwitterBotDotNet
             //Console.WriteLine(cleanBookAndAuth);
 
             //text to be posted to twitter
+            Console.ForegroundColor = ConsoleColor.Blue;
             string textToTweet = "Book of the Day is: " + cleanBookAndAuth + "\n" + cleanHashtag;
             Console.WriteLine(textToTweet);
+            Console.ResetColor();
 
             Tweet.PublishTweet(textToTweet);
             CheckTwitter();
