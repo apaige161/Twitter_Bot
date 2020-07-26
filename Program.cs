@@ -24,7 +24,7 @@ namespace TwitterBotDotNet
 
         //TODO: convert to a razor pages front end
 
-        //TODO: check twitter through safari
+        
 
         static void Main(string[] args)
         {
@@ -60,7 +60,7 @@ namespace TwitterBotDotNet
                         break;
                     case "5":
                         //scrape deal of the day at bestbuy
-                        TweetDealOfTheDay();
+                        TweetBookOfTheDay();
                         break;
 
                     case "6":
@@ -133,7 +133,7 @@ namespace TwitterBotDotNet
                                     "Picture and Text Tweet",
                                     "Schedule Tweet for later",
                                     "Schedule Media Tweet for later",
-                                    "(Scrape) Best Buy deal of the day and tweet --under construction",
+                                    "(Scrape) Book of the day",
                                     "(Scrape) hunting season and tweet",
                                     "(Scrape) news headlines on engadget.com and tweet",
                                     "(interval) Initialize Scrape for news headlines on engadget.com and tweet results every 4 minutes"
@@ -622,59 +622,67 @@ namespace TwitterBotDotNet
         }
 
         //scrape bestbuy.com for deal of the day
-        public static void TweetDealOfTheDay()
+        public static void TweetBookOfTheDay()
         {
 
-            Console.WriteLine("Displays Bestbuy's Deal of the day!.");
+            Console.WriteLine("Displays book of the day!");
             //grab html from website
 
             //fire html loader
             HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb();
-            HtmlAgilityPack.HtmlDocument doc = web.Load("https://www.bestbuy.com/site/misc/deal-of-the-day/pcmcat248000050016.c?id=pcmcat248000050016");
+            HtmlAgilityPack.HtmlDocument doc = web.Load("https://bookoftheday.org/");
 
             //grab html from home page
-            var Deals = doc.DocumentNode.SelectSingleNode("//div[@class='info-block']");
-            Console.Write(Deals);
-            /*
-            foreach (var item in Deals)
-            {
-                var links = item.SelectNodes("a");
-            }
-            */
-
-
-            /*
-            //loop through h3
-            int index = 1;
-            List<string> deals = new List<string>();
-            foreach (var text in Deals)
-            {
-                //add each animal to a list
-                string elementOfDeal = text.InnerHtml;
-                deals.Add(elementOfDeal);
-                Console.WriteLine($"{index}). {elementOfDeal}");
-                index++;
-            }
-            */
-
-
-
-            Console.WriteLine("Should be visable");
+            var Book = doc.DocumentNode.SelectSingleNode("//header/hgroup/h2");
+            string bookOfTheDay = Book.InnerText;
             
 
+            //set hashtag to first and last name of the author
+            string[] getAuthor = bookOfTheDay.Split('&');
+            getAuthor[1].ToString();
+            string[] getAuthorWords = getAuthor[1].Split(' ');
 
+            string cleanHashtag = "#Books #BookofTheDay #CSharp #ProjectWebScrape #";
 
+            cleanHashtag += getAuthorWords[1];
+            cleanHashtag += getAuthorWords[2];
 
+            //handles an author using a middle name or miultiple authors
+            //TODO: refactor later, has to be a better way
+            if(getAuthorWords.Length == 4)
+            {
+                cleanHashtag += getAuthorWords[3];
+            }
+            if (getAuthorWords.Length == 5)
+            {
+                cleanHashtag += getAuthorWords[4];
+            }
+            if (getAuthorWords.Length == 6)
+            {
+                cleanHashtag += getAuthorWords[5];
+            }
+            if (getAuthorWords.Length == 7)
+            {
+                cleanHashtag += getAuthorWords[6];
+            }
+            if (getAuthorWords.Length == 8)
+            {
+                cleanHashtag += getAuthorWords[7];
+            }
 
+            Console.WriteLine($"The hashtag of the author's first and last name together is: {cleanHashtag}");
+            Console.WriteLine("\n");
 
+            //print clean title
+            string cleanBookAndAuth = bookOfTheDay.Replace("&#8211;", "by");
+            //Console.WriteLine(cleanBookAndAuth);
 
+            //text to be posted to twitter
+            string textToTweet = "Book of the Day is: " + cleanBookAndAuth + "\n" + cleanHashtag;
+            Console.WriteLine(textToTweet);
 
-
-
-
-
-
-
+            Tweet.PublishTweet(textToTweet);
+            CheckTwitter();
 
         }
 
