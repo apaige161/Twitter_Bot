@@ -40,9 +40,10 @@ namespace TwitterBotDotNet
         {
             Console.WriteLine("Would you like to sign in with the default bot? Or add your own api keys?");
             Console.WriteLine("Enter DEFAULT or ADDKEYS");
-            string loginChoice = Console.ReadLine();
+            string loginChoice = Console.ReadLine().ToLower();
+            Console.WriteLine($"\n");
 
-            if(loginChoice == "default")
+            if (loginChoice == "default")
             {
                 //login to tester bot "autobot....."
                 DefaultLogin();
@@ -59,6 +60,7 @@ namespace TwitterBotDotNet
             {
                 Console.WriteLine("User must choose a valid option, logging into default account.");
                 DefaultLogin();
+                MainLoop();
             }
 
             Console.WriteLine("The program is now closing....");
@@ -89,7 +91,8 @@ namespace TwitterBotDotNet
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Login Successful");
                 //validate which user is loged in
-                Console.WriteLine(user);
+                Console.WriteLine($"{user} is signed in.");
+                
                 Console.ResetColor();
             }
             else
@@ -181,7 +184,7 @@ namespace TwitterBotDotNet
 
                     case "7":
                         //post news headline from a website(engadget.com) (popular) now from scrapped website now
-                        TweetNews();
+                        ScrapeAndPostRandomArticleFromEngadget();
                         break;
 
                     case "8":
@@ -776,7 +779,7 @@ namespace TwitterBotDotNet
         }
 
         //run news scrapper once, now
-        public static void TweetNews()
+        public static void ScrapeAndPostRandomArticleFromEngadget()
         {
             //scrape data
             HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb();
@@ -799,33 +802,75 @@ namespace TwitterBotDotNet
 
                 index++;
             }
-            Console.WriteLine("\n");
 
-            //post articles
+            //default article to post
+            string articleToPost = newsList[0];
 
-            //TODO: - Done in scraper helper -  Post a random article out of the top few articles
-
-            //Print hashtags to be posted
-            string input = newsList[0];
-            string firstWordOfArticle = input.Substring(0, input.IndexOf(" ")); // Result is "first word of article"
-            Console.Write($"The Hashtags being sent with the tweet: ");
+            //Post a random article out of the top few articles
+            Random randomArticle = new Random();
+            articleToPost = newsList[randomArticle.Next(15)];
+            //articleToPost = newsList[10];
+            //print the random article in blue 
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"#{firstWordOfArticle} #Engadget #ProjectWebScrape");
+
+            //get rid of weird &#039; thing in scraped articles
+            string cleanArticle = articleToPost.Replace("&#039;", "");
+
+            Console.WriteLine(cleanArticle);
             Console.ResetColor();
 
-            //post articles
-            Console.WriteLine("Would you like to post the top news story?");
-            string postArticle = Console.ReadLine().ToLower();
 
-            if (postArticle == "yes" || postArticle == "y")
+            //grab all uppercase letters of the new article and add that word as a hastag
+            string[] split = cleanArticle.Split(' ');
+            string[] listOfHashtags = new string[split.Length];
+            for (int i = 0; i < split.Length; i++)
             {
-                Console.WriteLine($"{ newsList[0] }");
-                //post a tweet
-                Tweet.PublishTweet($"TOP STORY: { newsList[0] } #Engadget and some words");
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("scraped element/s posted");
-                Console.ResetColor();
+                if (split[i].Any(char.IsUpper))
+                {
+                    listOfHashtags[i] = "#" + split[i] + " ";
+
+                }
             }
+
+            //join the list together
+            string generatedHashTags = string.Join("", listOfHashtags);
+
+            string cleanHashtags = generatedHashTags.Replace("’", "")
+                                                    .Replace("‘", "")
+                                                    .Replace("'", "")
+                                                    .Replace(",", "")
+                                                    .Replace("-", "");
+
+            //TODO: LATER: turns the text into just the quote 
+            //Goal: is to get rid of the spaces within a quote and post as a hashtag
+
+            string engadgetHashtags = $"#Engadget #ProjectWebScrape #CSharp";
+            Console.ForegroundColor = ConsoleColor.Green;
+            string textToTweet = $"TOP STORY: { cleanArticle } \n { engadgetHashtags } { cleanHashtags }";
+            Console.ResetColor();
+            Console.WriteLine("\n");
+            //shows dynamic hashtags
+            Console.Write($"The Hashtags being sent with the tweet: ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"{ engadgetHashtags } { cleanHashtags }");
+            Console.ResetColor();
+            Console.WriteLine("\n");
+            //shows what will be posted
+            Console.Write($"Story to Publish: ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine(textToTweet);
+            Console.ResetColor();
+            Console.WriteLine("\n");
+
+            //post the news story
+            //this is here to post as soon as the program runs
+            Tweet.PublishTweet(textToTweet);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("STORY posted");
+            Console.ResetColor();
+            Console.WriteLine("\n");
+
+
         }
 
         //initialize news scrapper, runs now and then every 4 minutes picks a random top article to post
