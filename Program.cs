@@ -38,7 +38,6 @@ namespace TwitterBotDotNet
 
         static void Main(string[] args)
         {
-            string keepGoing = "yes";
             Console.WriteLine("Would you like to sign in with the default bot? Or add your own api keys?");
             Console.WriteLine("Enter DEFAULT or ADDKEYS");
             string loginChoice = Console.ReadLine();
@@ -47,81 +46,19 @@ namespace TwitterBotDotNet
             {
                 //login to tester bot "autobot....."
                 DefaultLogin();
+                MainLoop();
             }
 
             else if(loginChoice == "addkeys")
             {
                 //prompt user to enter credentials
                 UserLogin();
+                MainLoop();
             }
             else
             {
-                Console.WriteLine("User must choose an option, logging into default account.");
+                Console.WriteLine("User must choose a valid option, logging into default account.");
                 DefaultLogin();
-            }
-
-            /*
-             * figure out how to get a variable from a public static void to the main function
-            //logged in validation
-            if (user = null)
-            {
-                keepGoing = "no";
-            }
-            */
-
-            while (keepGoing == "yes")
-            {
-                ProgramOptions();
-                string userInput = Console.ReadLine();
-                Console.WriteLine("\n");
-                switch (userInput)
-                {
-                    case "1":
-                        //publish tweet text on your timeline now
-                        TweetText();
-                        break;
-
-                    case "2":
-                        //publish media with a caption now
-                        TweetMedia();
-                        break;
-
-                    case "3":
-                        //tweet text later
-                        ScheduleTweetText();
-                        break;
-
-                    case "4":
-                        //tweet media later
-                        ScheduleTweetMedia();
-                        break;
-                    case "5":
-                        //scrape deal of the day at bestbuy
-                        TweetBookOfTheDay();
-                        break;
-
-                    case "6":
-                        //scrape data from a website and tweet that text now
-                        TweetHuntingSeaon();
-                        break;
-
-                    case "7":
-                        //post news headline from a website(engadget.com) (popular) now from scrapped website now
-                        TweetNews();
-                        break;
-
-                    case "8":
-                        //initialize scraper now and to run every (4 minutes)
-                        IntervalTweetNews();
-                        break;
-
-                    default:
-                        //return error
-                        ReturnError();
-                        break;
-                }
-                CheckForExit();
-                keepGoing = Console.ReadLine();
             }
 
             Console.WriteLine("The program is now closing....");
@@ -201,6 +138,64 @@ namespace TwitterBotDotNet
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Could Not Login, Check Credentials or Internet Connection.");
                 Console.ResetColor();
+            }
+        }
+
+        public static void MainLoop()
+        {
+            while (Loop.keepGoing == "yes")
+            {
+                ProgramOptions();
+                string userInput = Console.ReadLine();
+                Console.WriteLine("\n");
+                switch (userInput)
+                {
+                    case "1":
+                        //publish tweet text on your timeline now
+                        TweetText();
+                        break;
+
+                    case "2":
+                        //publish media with a caption now
+                        TweetMedia();
+                        break;
+
+                    case "3":
+                        //tweet text later
+                        ScheduleTweetText();
+                        break;
+
+                    case "4":
+                        //tweet media later
+                        ScheduleTweetMedia();
+                        break;
+                    case "5":
+                        //scrape deal of the day at bestbuy
+                        TweetBookOfTheDay();
+                        break;
+
+                    case "6":
+                        //scrape data from a website and tweet that text now
+                        TweetHuntingSeaon();
+                        break;
+
+                    case "7":
+                        //post news headline from a website(engadget.com) (popular) now from scrapped website now
+                        TweetNews();
+                        break;
+
+                    case "8":
+                        //initialize scraper now and to run every (4 minutes)
+                        IntervalTweetNews();
+                        break;
+
+                    default:
+                        //return error
+                        ReturnError();
+                        break;
+                }
+                CheckForExit();
+                Loop.keepGoing = Console.ReadLine();
             }
         }
 
