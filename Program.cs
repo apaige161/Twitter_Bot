@@ -12,19 +12,24 @@ using Tweetinvi.Models;
 using Tweetinvi.Parameters;
 using System.Diagnostics;
 using HtmlAgilityPack;
+using System.Net;
 
 namespace TwitterBotDotNet
 {
     class Program
     {
-        //NOTE: for mac select Run from the top menu bar
+        //NOTE: for mac select Run from the top menu bar,
         //      Run with > custom configuration
         //      make sure 'run in terminal' is checked
         //      Run
 
 
+        //TODO: test user login with new bot keys
 
-        //TODO: refactor TweetNews()
+        //TODO:add a way to save user api keys to a file
+
+
+        //TODO: refactor TweetNews() using code from the interval version
 
 
         //TODO: convert to a razor pages front end
@@ -34,7 +39,7 @@ namespace TwitterBotDotNet
         static void Main(string[] args)
         {
             string keepGoing = "yes";
-            Console.WriteLine("would you like to sign in with the default bot or add your own api keys");
+            Console.WriteLine("Would you like to sign in with the default bot? Or add your own api keys?");
             Console.WriteLine("Enter DEFAULT or ADDKEYS");
             string loginChoice = Console.ReadLine();
 
@@ -46,54 +51,25 @@ namespace TwitterBotDotNet
 
             else if(loginChoice == "addkeys")
             {
-                Console.WriteLine("You want to sign into your own account with api keys");
-
-                //set api keys
-                Console.WriteLine("ApiKey");
-                string ApiKey = Console.ReadLine();
-                Console.WriteLine("ApiKeySecret");
-                string ApiKeySecret = Console.ReadLine();
-                Console.WriteLine("AccessToken");
-                string AccessToken = Console.ReadLine();
-                Console.WriteLine("AccessTokenSecret");
-                string AccessTokenSecret = Console.ReadLine();
-
-
-                // Set up your credentials (https://apps.twitter.com)
-                Auth.SetUserCredentials(ApiKey, ApiKeySecret, AccessToken, AccessTokenSecret);
-
-                //Login
-                var user = User.GetAuthenticatedUser();
-                if (user != null)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Login Successful");
-                    Console.ResetColor();
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Could Not Login, Check Credentials or Internet Connection");
-                    Console.ResetColor();
-                    keepGoing = "no";
-                }
-                Console.WriteLine("\n");
-
-
+                //prompt user to enter credentials
+                UserLogin();
             }
-
             else
             {
-                Console.WriteLine("User must choose an option");
+                Console.WriteLine("User must choose an option, logging into default account.");
+                DefaultLogin();
             }
 
+            /*
+             * figure out how to get a variable from a public static void to the main function
+            //logged in validation
+            if (user = null)
+            {
+                keepGoing = "no";
+            }
+            */
 
-
-            //validate which user is loged in
-
-
-            
-            while(keepGoing == "yes")
+            while (keepGoing == "yes")
             {
                 ProgramOptions();
                 string userInput = Console.ReadLine();
@@ -175,6 +151,8 @@ namespace TwitterBotDotNet
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Login Successful");
+                //validate which user is loged in
+                Console.WriteLine(user);
                 Console.ResetColor();
             }
             else
@@ -184,6 +162,46 @@ namespace TwitterBotDotNet
                 Console.ResetColor();
             }
             Console.WriteLine("\n");
+        }
+
+        public static void UserLogin()
+        {
+            Console.WriteLine("You want to sign into your own account with api keys, enter them one at a time.");
+
+            //set api keys
+            Console.WriteLine("ApiKey");
+            string ApiKey = Console.ReadLine();
+            Console.WriteLine("ApiKeySecret");
+            string ApiKeySecret = Console.ReadLine();
+            Console.WriteLine("AccessToken");
+            string AccessToken = Console.ReadLine();
+            Console.WriteLine("AccessTokenSecret");
+            string AccessTokenSecret = Console.ReadLine();
+
+
+            // Set up your credentials (https://apps.twitter.com)
+            Auth.SetUserCredentials(ApiKey, ApiKeySecret, AccessToken, AccessTokenSecret);
+
+            //Login
+            var user = User.GetAuthenticatedUser();
+            if (user != null)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Login Successful");
+                //validate which user is loged in
+                Console.WriteLine($"{user} is signed in.");
+                Console.ResetColor();
+                Console.WriteLine("\n");
+
+                //TODO: save login info
+                //Console.WriteLine("\n");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Could Not Login, Check Credentials or Internet Connection.");
+                Console.ResetColor();
+            }
         }
 
         public static void ProgramOptions()
