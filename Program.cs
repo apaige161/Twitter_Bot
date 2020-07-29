@@ -23,14 +23,7 @@ namespace TwitterBotDotNet
         //      make sure 'run in terminal' is checked
         //      Run
 
-
-        //TODO: test user login with new bot keys
-
         //TODO:add a way to save user api keys to a file
-
-
-        //TODO: refactor TweetNews() using code from the interval version
-
 
         //TODO: convert to a razor pages front end
 
