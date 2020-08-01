@@ -27,7 +27,9 @@ namespace TwitterBotDotNet
 
         //TODO: convert to a razor pages front end
 
-        
+        //TODO: string interpolation
+
+
 
         static void Main(string[] args)
         {
@@ -43,7 +45,7 @@ namespace TwitterBotDotNet
                 MainLoop();
             }
 
-            else if(loginChoice == "addkeys")
+            else if (loginChoice == "addkeys")
             {
                 //prompt user to enter credentials
                 UserLogin();
@@ -85,7 +87,7 @@ namespace TwitterBotDotNet
                 Console.WriteLine("Login Successful");
                 //validate which user is loged in
                 Console.WriteLine($"{user} is signed in.");
-                
+
                 Console.ResetColor();
             }
             else
@@ -184,6 +186,10 @@ namespace TwitterBotDotNet
                         //initialize scraper now and to run every (4 minutes)
                         IntervalTweetNews();
                         break;
+                    case "9":
+                        //post price of "BTC"
+                        PostBtc();
+                        break;
 
                     default:
                         //return error
@@ -206,7 +212,8 @@ namespace TwitterBotDotNet
                                     "(Scrape) Book of the day",
                                     "(Scrape) hunting season and tweet",
                                     "(Scrape) news headlines on engadget.com and tweet",
-                                    "(interval) Initialize Scrape for news headlines on engadget.com and tweet results every 4 minutes"
+                                    "(interval) Initialize Scrape for news headlines on engadget.com and tweet results every 4 minutes",
+                                    "(webClient)Post Price of BTC"
             };
 
             Console.WriteLine("Choose an option by typing the number");
@@ -718,7 +725,7 @@ namespace TwitterBotDotNet
             //grab html from home page
             var Book = doc.DocumentNode.SelectSingleNode("//header/hgroup/h2");
             string bookOfTheDay = Book.InnerText;
-            
+
 
             //set hashtag to first and last name of the author
             string[] getAuthor = bookOfTheDay.Split('&');
@@ -732,7 +739,7 @@ namespace TwitterBotDotNet
 
             //handles an author using a middle name or miultiple authors
             //TODO: refactor later, has to be a better way
-            if(getAuthorWords.Length == 4)
+            if (getAuthorWords.Length == 4)
             {
                 cleanHashtag += getAuthorWords[3];
             }
@@ -885,6 +892,29 @@ namespace TwitterBotDotNet
 
             //print time of scheduled post
             Console.WriteLine("Your tweet will be published every 4 minutes as long as the program is running");
+        }
+
+        //post current price of btc
+        public static void PostBtc()
+        {
+            string json;
+
+            //start web client
+            using (var web = new System.Net.WebClient())
+            {
+                var url = @"https://api.coindesk.com/v1/bpi/currentprice.json";
+                json = web.DownloadString(url);
+            }
+
+            dynamic obj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+            var currentPrice = Convert.ToDecimal(obj.bpi.USD.rate.Value);
+
+            Console.WriteLine($"{currentPrice} is the current price of BTC");
+
+            string textToTweet = "The current price of BTC is: $" + currentPrice + " Powered by CoinDesk https://www.coindesk.com/price/bitcoin #BTC #CryptoCurrency";
+
+            Tweet.PublishTweet(textToTweet);
+            CheckTwitter();
         }
 
         public static void ReturnError()
