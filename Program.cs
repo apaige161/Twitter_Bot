@@ -13,6 +13,8 @@ using Tweetinvi.Parameters;
 using System.Diagnostics;
 using HtmlAgilityPack;
 using System.Net;
+using Newtonsoft.Json.Linq;
+using RestSharp;
 
 namespace TwitterBotDotNet
 {
@@ -26,6 +28,8 @@ namespace TwitterBotDotNet
         //TODO:add a way to save user api keys to a file
 
         //TODO: convert to a razor pages front end
+
+        //TODO: convert post btc price to its own exe --or async it(all the external exe) somehow??
 
         //TODO: string interpolation
 
@@ -190,6 +194,10 @@ namespace TwitterBotDotNet
                         //post price of "BTC"
                         PostBtc();
                         break;
+                    case "10":
+                        //post stock prices
+                        PostStocks();
+                        break;
 
                     default:
                         //return error
@@ -213,7 +221,8 @@ namespace TwitterBotDotNet
                                     "(Scrape) hunting season and tweet",
                                     "(Scrape) news headlines on engadget.com and tweet",
                                     "(interval) Initialize Scrape for news headlines on engadget.com and tweet results every 4 minutes",
-                                    "(webClient)Post Price of BTC"
+                                    "(webClient)Post Price of BTC",
+                                    "(webClient)Post stock prices"
             };
 
             Console.WriteLine("Choose an option by typing the number");
@@ -782,8 +791,8 @@ namespace TwitterBotDotNet
         public static void ScrapeAndPostRandomArticleFromEngadget()
         {
             //scrape data
-            HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb();
-            HtmlAgilityPack.HtmlDocument doc = web.Load("https://www.engadget.com/");
+            HtmlWeb web = new HtmlWeb();
+            HtmlDocument doc = web.Load("https://www.engadget.com/");
             //grab html from home page
             var NewsArticles = doc.DocumentNode.SelectNodes("//span[@class='th-underline']");
 
@@ -897,25 +906,77 @@ namespace TwitterBotDotNet
         //post current price of btc
         public static void PostBtc()
         {
-            string json;
 
-            //start web client
-            using (var web = new System.Net.WebClient())
+            //convert to a helper program
+            while (true)
             {
-                var url = @"https://api.coindesk.com/v1/bpi/currentprice.json";
-                json = web.DownloadString(url);
-            }
+                int timesPosted = 0;
 
-            dynamic obj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
-            var currentPrice = Convert.ToDecimal(obj.bpi.USD.rate.Value);
+                timesPosted++;
 
-            Console.WriteLine($"{currentPrice} is the current price of BTC");
+                Console.WriteLine($"Number of times the price of btc has posted in this instance is {timesPosted}");
+                Console.WriteLine($"\n");
+                Console.WriteLine("Program will run again in an hour");
 
-            string textToTweet = "The current price of BTC is: $" + currentPrice + " Powered by CoinDesk https://www.coindesk.com/price/bitcoin #BTC #CryptoCurrency";
+                string json;
+                decimal targetPrice;
 
-            Tweet.PublishTweet(textToTweet);
-            CheckTwitter();
+                //start web client
+                using (var web = new System.Net.WebClient())
+                {
+                    var url = @"https://api.coindesk.com/v1/bpi/currentprice.json";
+                    json = web.DownloadString(url);
+                }
+                //parse into usable data
+                dynamic obj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+                var currentPrice = Convert.ToDecimal(obj.bpi.USD.rate.Value);
+                Console.WriteLine($"BTC: ${currentPrice}");
+
+                
+
+                //some math for additional information
+                decimal remainder = currentPrice % 1000;
+                decimal distanceToMilestone = 1000 - remainder;
+
+                //find the next whole thousand dollar for a targetprice point
+                targetPrice = (currentPrice - remainder) + 1000;
+
+                Console.WriteLine($"${distanceToMilestone} away from {targetPrice}");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                string textToTweet = $"The current price of BTC is: ${Convert.ToDouble(currentPrice)} \n #BTC #CryptoCurrency #Coindesk \n \n \n Powered by CoinDesk \n https://www.coindesk.com/price/bitcoin ";
+                Console.ResetColor();
+                //post special string when milestones are hit
+                //but what if we start the program and the price is already 14000
+
+                if (currentPrice > targetPrice)
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    textToTweet = $"Bitcoin is above ${targetPrice} again! \n #BTC #CryptoCurrency #Coindesk \n Powered by CoinDesk \n https://www.coindesk.com/price/bitcoin ";
+                    Console.ResetColor();
+                    targetPrice += 1000;
+                }
+
+
+                
+
+
+
+
+
+                Tweet.PublishTweet(textToTweet);
+                Console.WriteLine("It is not time to post yet, the program will try again in 60 minutes...");
+                Thread.Sleep(7200000);   //wait for 1 hour
+            }//end of while loop
+            
         }
+
+
+        //A work in progress...
+        public static void PostStocks()
+        {
+            
+        }
+    
 
         public static void ReturnError()
         {
@@ -931,7 +992,6 @@ namespace TwitterBotDotNet
 
         }
 
-        //opens chrome and goes directly to twitter
         public static void CheckTwitter()
         {
             Console.WriteLine("Would you like to check twitter to make sure? Select: Yes or No");
