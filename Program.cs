@@ -25,7 +25,7 @@ namespace TwitterBotDotNet
         //      make sure 'run in terminal' is checked
         //      Run
 
-        //TODO:add a way to save user api keys to a file
+        //TODO: add a way to save user api keys to a file -database, maybe just an excel file
 
         //TODO: convert to a razor pages front end
 
@@ -62,8 +62,19 @@ namespace TwitterBotDotNet
                 MainLoop();
             }
 
-            Console.WriteLine("The program is now closing....");
-            Console.ReadLine();
+            Console.WriteLine("The program is now closing in....");
+            Thread.Sleep(600);
+            Console.Beep();
+            Console.WriteLine(3);
+            Thread.Sleep(600);
+            Console.Beep();
+            Console.WriteLine(2);
+            Thread.Sleep(600);
+            Console.Beep();
+            Console.WriteLine(1);
+            Thread.Sleep(600);
+            Console.Beep();
+
         }
 
         public static void DefaultLogin()
@@ -904,6 +915,7 @@ namespace TwitterBotDotNet
         }
 
         //post current price of btc
+        //make this a webhook -only post when a milestone is hit??
         public static void PostBtc()
         {
 
