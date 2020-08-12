@@ -340,3 +340,4 @@ C:\Users\Storm\Desktop\codeRepository\Twitter_Bot\obj\Debug\TwitterBotDotNet.exe
 C:\Users\Storm\Desktop\codeRepository\Twitter_Bot\obj\Debug\TwitterBotDotNet.pdb
 C:\Users\Storm\Desktop\codeRepository\Twitter_Bot\bin\Debug\RestSharp.dll
 C:\Users\Storm\Desktop\codeRepository\Twitter_Bot\bin\Debug\RestSharp.xml
+C:\Users\Storm\Desktop\codeRepository\Twitter_Bot\bin\Debug\TwitterBotBtcHelper.exe

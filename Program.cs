@@ -1,20 +1,14 @@
 ﻿
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Timers;
-using System.Threading.Tasks;
 using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
-using System.Diagnostics;
-using HtmlAgilityPack;
-using System.Net;
-using Newtonsoft.Json.Linq;
-using RestSharp;
 
 namespace TwitterBotDotNet
 {
@@ -24,6 +18,8 @@ namespace TwitterBotDotNet
         //      Run with > custom configuration
         //      make sure 'run in terminal' is checked
         //      Run
+
+        //TODO: fix BUG: when using a helper program, import user api keys
 
         //TODO: add a way to save user api keys to a file -database, maybe just an excel file
 
@@ -54,6 +50,11 @@ namespace TwitterBotDotNet
                 //prompt user to enter credentials
                 UserLogin();
                 MainLoop();
+
+                //export new api keys to helper programs
+
+
+
             }
             else
             {
@@ -224,16 +225,16 @@ namespace TwitterBotDotNet
         {
             //program options
             Console.WriteLine("\n");
-            string[] UserOptions = { "Text Only Tweet",
-                                    "Picture and Text Tweet",
-                                    "Schedule Tweet for later",
-                                    "Schedule Media Tweet for later",
+            string[] UserOptions = { "(User Content)Text Only Tweet",
+                                    "(User Content)Picture and Text Tweet",
+                                    "(User Content)Schedule Tweet for later",
+                                    "(User Content)Schedule Media Tweet for later",
                                     "(Scrape) Book of the day",
                                     "(Scrape) hunting season and tweet",
                                     "(Scrape) news headlines on engadget.com and tweet",
                                     "(interval) Initialize Scrape for news headlines on engadget.com and tweet results every 4 minutes",
-                                    "(webClient)Post Price of BTC",
-                                    "(webClient)Post stock prices"
+                                    "(interval)Post Price of BTC",
+                                    "(Scrape)Post stock prices"
             };
 
             Console.WriteLine("Choose an option by typing the number");
@@ -915,78 +916,33 @@ namespace TwitterBotDotNet
         }
 
         //post current price of btc
-        //make this a webhook -only post when a milestone is hit??
+        //make this a webhook -only post when a milestone is hit?? --better way?
         public static void PostBtc()
         {
 
-            //convert to a helper program
-            while (true)
-            {
-                int timesPosted = 0;
+            Console.WriteLine("You have initialized the BTC scraper, it will post the price of bitcoin every hour.");
 
-                timesPosted++;
+            //start helper program
 
-                Console.WriteLine($"Number of times the price of btc has posted in this instance is {timesPosted}");
-                Console.WriteLine($"\n");
-                Console.WriteLine("Program will run again in an hour");
+            //pass in the path of the helper program
+            string pathOfHelperProgram = $@".{Path.DirectorySeparatorChar}TwitterBotBtcHelper.exe";
 
-                string json;
-                decimal targetPrice;
+            ProcessStartInfo startInfo = new ProcessStartInfo(pathOfHelperProgram);
 
-                //start web client
-                using (var web = new System.Net.WebClient())
-                {
-                    var url = @"https://api.coindesk.com/v1/bpi/currentprice.json";
-                    json = web.DownloadString(url);
-                }
-                //parse into usable data
-                dynamic obj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
-                var currentPrice = Convert.ToDecimal(obj.bpi.USD.rate.Value);
-                Console.WriteLine($"BTC: ${currentPrice}");
+            Process.Start(startInfo);
 
-                
-
-                //some math for additional information
-                decimal remainder = currentPrice % 1000;
-                decimal distanceToMilestone = 1000 - remainder;
-
-                //find the next whole thousand dollar for a targetprice point
-                targetPrice = (currentPrice - remainder) + 1000;
-
-                Console.WriteLine($"${distanceToMilestone} away from {targetPrice}");
-                Console.ForegroundColor = ConsoleColor.Blue;
-                string textToTweet = $"The current price of BTC is: ${Convert.ToDouble(currentPrice)} \n #BTC #CryptoCurrency #Coindesk \n \n \n Powered by CoinDesk \n https://www.coindesk.com/price/bitcoin ";
-                Console.ResetColor();
-                //post special string when milestones are hit
-                //but what if we start the program and the price is already 14000
-
-                if (currentPrice > targetPrice)
-                {
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    textToTweet = $"Bitcoin is above ${targetPrice} again! \n #BTC #CryptoCurrency #Coindesk \n Powered by CoinDesk \n https://www.coindesk.com/price/bitcoin ";
-                    Console.ResetColor();
-                    targetPrice += 1000;
-                }
+            //print time of scheduled post
+            Console.WriteLine("Your tweet will be published every hour as long as the program is running");
 
 
-                
-
-
-
-
-
-                Tweet.PublishTweet(textToTweet);
-                Console.WriteLine("It is not time to post yet, the program will try again in 60 minutes...");
-                Thread.Sleep(7200000);   //wait for 1 hour
-            }//end of while loop
-            
         }
 
 
         //A work in progress...
         public static void PostStocks()
         {
-            
+            Console.WriteLine("Under Construction");
+            Console.WriteLine("Does not do anything as of right now");
         }
     
 
