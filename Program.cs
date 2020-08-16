@@ -19,13 +19,11 @@ namespace TwitterBotDotNet
         //      make sure 'run in terminal' is checked
         //      Run
 
-        //TODO: fix BUG: when using a helper program, import user api keys
+        //TODO: fix BUG: when using a helper program, import user api keys into helper program
 
         //TODO: add a way to save user api keys to a file -database, maybe just an excel file
 
         //TODO: convert to a razor pages front end
-
-        //TODO: convert post btc price to its own exe --or async it(all the external exe) somehow??
 
         //TODO: string interpolation
 
@@ -33,6 +31,7 @@ namespace TwitterBotDotNet
 
         static void Main(string[] args)
         {
+            //Loop.PlayMarioTheme();
             Console.WriteLine("Would you like to sign in with the default bot? Or add your own api keys?");
             Console.WriteLine("Enter DEFAULT or ADDKEYS");
             string loginChoice = Console.ReadLine().ToLower();
@@ -210,6 +209,9 @@ namespace TwitterBotDotNet
                         //post stock prices
                         PostStocks();
                         break;
+                    case "11":
+                        Loop.PlayMarioTheme();
+                        break;
 
                     default:
                         //return error
@@ -234,7 +236,8 @@ namespace TwitterBotDotNet
                                     "(Scrape) news headlines on engadget.com and tweet",
                                     "(interval) Initialize Scrape for news headlines on engadget.com and tweet results every 4 minutes",
                                     "(interval)Post Price of BTC",
-                                    "(Scrape)Post stock prices"
+                                    "(Scrape)Post stock prices",
+                                    "(for fun)Play Mario theme song"
             };
 
             Console.WriteLine("Choose an option by typing the number");
@@ -933,7 +936,6 @@ namespace TwitterBotDotNet
 
             //print time of scheduled post
             Console.WriteLine("Your tweet will be published every hour as long as the program is running");
-
 
         }
 
